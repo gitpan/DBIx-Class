@@ -588,6 +588,7 @@ t/prefetch/with_limit.t
 t/relationship/after_update.t
 t/relationship/core.t
 t/relationship/custom.t
+t/relationship/custom_opaque.t
 t/relationship/custom_with_null_in_cond.t
 t/relationship/doesnt_exist.t
 t/relationship/dynamic_foreign_columns.t
@@ -601,6 +602,7 @@ t/relationship/update_or_create_single.t
 t/resultset/as_query.t
 t/resultset/as_subselect_rs.t
 t/resultset/bind_attr.t
+t/resultset/find_on_subquery_cond.t
 t/resultset/inflate_result_api.t
 t/resultset/inflatemap_abuse.t
 t/resultset/is_ordered.t
@@ -612,6 +614,7 @@ t/resultset/update_delete.t
 t/resultset_class.t
 t/resultset_overload.t
 t/resultsource/set_primary_key.t
+t/row/copy_with_extra_selection.t
 t/row/filter_column.t
 t/row/find_one_has_many.t
 t/row/inflate_result.t
@@ -635,6 +638,7 @@ t/sqlmaker/core.t
 t/sqlmaker/core_quoted.t
 t/sqlmaker/dbihacks_internals.t
 t/sqlmaker/hierarchical/oracle.t
+t/sqlmaker/legacy_joins.t
 t/sqlmaker/limit_dialects/basic.t
 t/sqlmaker/limit_dialects/custom.t
 t/sqlmaker/limit_dialects/fetch_first.t

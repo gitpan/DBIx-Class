@@ -1,6 +1,6 @@
 Revision history for DBIx::Class
 
-0.082700_09 DEVELOPER RELEASE (roughly 26ac80ff) 2014-09-07 12:18 (UTC)
+0.082700_10 FINAL(ish) TRIAL RELEASE (roughly 1efc866d) 2014-09-15 13:35 (UTC)
     * Notable Changes and Deprecations
         - DBIC::FilterColumn now properly bypasses \'' and \[] literals, just
           like the rest of DBIC
@@ -17,6 +17,8 @@ Revision history for DBIx::Class
           objects that went out of sync with the storage (RT#96499)
         - CDBICompat::columns() now supports adding columns through supplied
           Class::DBI::Column instances (GH#52)
+        - Deprecate { col1 => col2 } expressions in manual from structures
+          (at some point of time manual from will be deprecated itself)
 
     * Fixes
         - Fix Resultset delete/update affecting *THE ENTIRE TABLE* in cases
@@ -46,12 +48,15 @@ Revision history for DBIx::Class
         - Fix set_column on non-native (+columns) selections (RT#86685)
         - Fix set_inflated_column incorrectly handling \[] literals (GH#44)
         - Ensure that setting a column to a literal invariably marks it dirty
+        - Fix copy() not working correctly with extra selections present
         - Work around exception objects with broken string overloading in one
           additional codepath (missed in 0.08260)
         - Fix more inconsistencies of the quote_names attribute propagating
           to SQL::Translator (partially RT#87731)
         - Fix SQLT constraint naming when DBIC table names are fully qualified
           (PR#48)
+        - Ensure ::Schema::Versioned connects only once by reusing the main
+          connection (GH#57)
         - Fix inability to handle multiple consecutive transactions with
           savepoints on DBD::SQLite < 1.39
         - Fix CDBICompat to match Class::DBI behavior handling non-result

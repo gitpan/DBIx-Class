@@ -1331,6 +1331,7 @@ sub add_relationship {
   my %rels = %{ $self->_relationships };
   $rels{$rel} = { class => $f_source_name,
                   source => $f_source_name,
+                  _original_name => $rel,
                   cond  => $cond,
                   attrs => $attrs };
   $self->_relationships(\%rels);
@@ -1567,20 +1568,23 @@ sub _minimal_valueset_satisfying_constraint {
 
   my $cols;
   for my $col ($self->unique_constraint_columns($args->{constraint_name}) ) {
-    if( ! exists $vals->{$col} ) {
-      $cols->{missing}{$col} = 1;
+    if( ! exists $vals->{$col} or ( $vals->{$col}||'' ) eq UNRESOLVABLE_CONDITION ) {
+      $cols->{missing}{$col} = undef;
     }
     elsif( ! defined $vals->{$col} ) {
-      $cols->{$args->{carp_on_nulls} ? 'undefined' : 'missing'}{$col} = 1;
+      $cols->{$args->{carp_on_nulls} ? 'undefined' : 'missing'}{$col} = undef;
     }
     else {
-      $cols->{present}{$col} = 1;
+      # we need to inject back the '=' as _extract_fixed_condition_columns
+      # will strip it from literals and values alike, resulting in an invalid
+      # condition in the end
+      $cols->{present}{$col} = { '=' => $vals->{$col} };
     }
 
     $cols->{fc}{$col} = 1 if (
-      ! ( $cols->{missing} || {})->{$col}
+      ( ! $cols->{missing} or ! exists $cols->{missing}{$col} )
         and
-      $args->{columns_info}{$col}{_filter_info}
+      keys %{ $args->{columns_info}{$col}{_filter_info} || {} }
     );
   }
 
@@ -1609,10 +1613,7 @@ sub _minimal_valueset_satisfying_constraint {
     ));
   }
 
-  return { map
-    { $_ => $vals->{$_} }
-    ( keys %{$cols->{present}}, keys %{$cols->{undefined}} )
-  };
+  return { map { %{ $cols->{$_}||{} } } qw(present undefined) };
 }
 
 # Returns the {from} structure used to express JOIN conditions
@@ -1864,12 +1865,12 @@ sub _resolve_relationship_condition {
   $self->throw_exception("Arguments 'self_alias' and 'foreign_alias' may not be identical")
     if $args->{self_alias} eq $args->{foreign_alias};
 
-  my $exception_rel_id = "relationship '$args->{rel_name}' on source '@{[ $self->source_name ]}'";
-
   my $rel_info = $self->relationship_info($args->{rel_name})
 # TEMP
 #    or $self->throw_exception( "No such $exception_rel_id" );
-    or carp_unique("Requesting resolution on non-existent $exception_rel_id: fix your code *soon*, as it will break with the next major version");
+    or carp_unique("Requesting resolution on non-existent relationship '$args->{rel_name}' on source '@{[ $self->source_name ]}': fix your code *soon*, as it will break with the next major version");
+
+  my $exception_rel_id = "relationship '$rel_info->{_original_name}' on source '@{[ $self->source_name ]}'";
 
   $self->throw_exception("No practical way to resolve $exception_rel_id between two data structures")
     if exists $args->{self_result_object} and exists $args->{foreign_values};
@@ -1899,7 +1900,7 @@ sub _resolve_relationship_condition {
 
       carp_unique(
         "Objects supplied as 'foreign_values' ($args->{foreign_values}) "
-      . "usually should inherit from the related ResultClass ('@{[ $rel_rsrc->result_class ]})', "
+      . "usually should inherit from the related ResultClass ('@{[ $rel_rsrc->result_class ]}'), "
       . "perhaps you've made a mistake invoking the condition resolver?"
       ) unless $args->{foreign_values}->isa($rel_rsrc->result_class);
 
@@ -1972,10 +1973,25 @@ sub _resolve_relationship_condition {
         $joinfree_source->columns
       };
 
-      $fq_col_list->{$_} or $self->throw_exception (
+      exists $fq_col_list->{$_} or $self->throw_exception (
         "The join-free condition returned for $exception_rel_id may only "
-      . 'contain keys that are fully qualified column names of the corresponding source'
+      . 'contain keys that are fully qualified column names of the corresponding source '
+      . "(it returned '$_')"
       ) for keys %$jfc;
+
+      (
+        length ref $_
+          and
+        defined blessed($_)
+          and
+        $_->isa('DBIx::Class::Row')
+          and
+        $self->throw_exception (
+          "The join-free condition returned for $exception_rel_id may not "
+        . 'contain result objects as values - perhaps instead of invoking '
+        . '->$something you meant to return ->get_column($something)'
+        )
+      ) for values %$jfc;
 
     }
   }
@@ -2123,33 +2139,52 @@ sub _resolve_relationship_condition {
     for my $lhs (keys %$col_eqs) {
 
       next if $col_eqs->{$lhs} eq UNRESOLVABLE_CONDITION;
-      my ($rhs) = @{ is_literal_value( $ret->{condition}{$lhs} ) || next };
 
       # there is no way to know who is right and who is left in a cref
-      # therefore a full blown resolution call
+      # therefore a full blown resolution call, and figure out the
+      # direction a bit further below
       $colinfos ||= $storage->_resolve_column_info([
         { -alias => $args->{self_alias}, -rsrc => $self },
         { -alias => $args->{foreign_alias}, -rsrc => $rel_rsrc },
       ]);
 
-      my ($l_col, $r_col) = map { $_ =~ / ([^\.]+) $ /x } ($lhs, $rhs);
+      next unless $colinfos->{$lhs};  # someone is engaging in witchcraft
 
-      if (
-        $colinfos->{$l_col}
+      if ( my $rhs_ref = is_literal_value( $col_eqs->{$lhs} ) ) {
+
+        if (
+          $colinfos->{$rhs_ref->[0]}
+            and
+          $colinfos->{$lhs}{-source_alias} ne $colinfos->{$rhs_ref->[0]}{-source_alias}
+        ) {
+          ( $colinfos->{$lhs}{-source_alias} eq $args->{self_alias} )
+            ? ( $ret->{identity_map}{$colinfos->{$lhs}{-colname}} = $colinfos->{$rhs_ref->[0]}{-colname} )
+            : ( $ret->{identity_map}{$colinfos->{$rhs_ref->[0]}{-colname}} = $colinfos->{$lhs}{-colname} )
+          ;
+        }
+      }
+      elsif (
+        $col_eqs->{$lhs} =~ /^ ( \Q$args->{self_alias}\E \. .+ ) /x
           and
-        $colinfos->{$r_col}
-          and
-        $colinfos->{$l_col}{-source_alias} ne $colinfos->{$r_col}{-source_alias}
+        ($colinfos->{$1}||{})->{-result_source} == $rel_rsrc
       ) {
-        ( $colinfos->{$l_col}{-source_alias} eq $args->{self_alias} )
-          ? ( $ret->{identity_map}{$l_col} = $r_col )
-          : ( $ret->{identity_map}{$r_col} = $l_col )
+        my ($lcol, $rcol) = map
+          { $colinfos->{$_}{-colname} }
+          ( $lhs, $1 )
         ;
+        carp_unique(
+          "The $exception_rel_id specifies equality of column '$lcol' and the "
+        . "*VALUE* '$rcol' (you did not use the { -ident => ... } operator)"
+        );
       }
     }
   }
 
-  $ret
+  # FIXME - temporary, to fool the idiotic check in SQLMaker::_join_condition
+  $ret->{condition} = { -and => [ $ret->{condition} ] }
+    unless $ret->{condition} eq UNRESOLVABLE_CONDITION;
+
+  $ret;
 }
 
 =head2 related_source
