@@ -554,6 +554,7 @@ t/lib/ViewDepsBad/Result/Year2010CDsWithManyTracks.pm
 t/multi_create/cd_single.t
 t/multi_create/diamond.t
 t/multi_create/existing_in_chain.t
+t/multi_create/find_or_multicreate.t
 t/multi_create/has_many.t
 t/multi_create/in_memory.t
 t/multi_create/insert_defaults.t
