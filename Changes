@@ -1,6 +1,6 @@
 Revision history for DBIx::Class
 
-0.082700_11 WHARGARBL TRIAL RELEASE (roughly e084cb2b) 2014-09-16 08:25 (UTC)
+0.082700_12 HOW ABOUT THEM APPLES TRIAL RELEASE (roughly d16df239) 2014-09-19 16:12 (UTC)
     * Notable Changes and Deprecations
         - DBIC::FilterColumn now properly bypasses \'' and \[] literals, just
           like the rest of DBIC

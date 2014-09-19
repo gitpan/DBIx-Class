@@ -625,6 +625,7 @@ t/schema/anon.t
 t/schema/clone.t
 t/search/deprecated_attributes.t
 t/search/distinct.t
+t/search/empty_attrs.t
 t/search/preserve_original_rs.t
 t/search/reentrancy.t
 t/search/related_has_many.t

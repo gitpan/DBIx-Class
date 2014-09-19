@@ -1331,7 +1331,6 @@ sub add_relationship {
   my %rels = %{ $self->_relationships };
   $rels{$rel} = { class => $f_source_name,
                   source => $f_source_name,
-                  _original_name => $rel,
                   cond  => $cond,
                   attrs => $attrs };
   $self->_relationships(\%rels);
@@ -1865,12 +1864,17 @@ sub _resolve_relationship_condition {
   $self->throw_exception("Arguments 'self_alias' and 'foreign_alias' may not be identical")
     if $args->{self_alias} eq $args->{foreign_alias};
 
+# TEMP
+  my $exception_rel_id = "relationship '$args->{rel_name}' on source '@{[ $self->source_name ]}'";
+
   my $rel_info = $self->relationship_info($args->{rel_name})
 # TEMP
 #    or $self->throw_exception( "No such $exception_rel_id" );
     or carp_unique("Requesting resolution on non-existent relationship '$args->{rel_name}' on source '@{[ $self->source_name ]}': fix your code *soon*, as it will break with the next major version");
 
-  my $exception_rel_id = "relationship '$rel_info->{_original_name}' on source '@{[ $self->source_name ]}'";
+# TEMP
+  $exception_rel_id = "relationship '$rel_info->{_original_name}' on source '@{[ $self->source_name ]}'"
+    if $rel_info and exists $rel_info->{_original_name};
 
   $self->throw_exception("No practical way to resolve $exception_rel_id between two data structures")
     if exists $args->{self_result_object} and exists $args->{foreign_values};
@@ -1890,9 +1894,13 @@ sub _resolve_relationship_condition {
     )
   ;
 
-  my $rel_rsrc = $self->related_source($args->{rel_name});
+#TEMP
+  my $rel_rsrc;# = $self->related_source($args->{rel_name});
 
   if (exists $args->{foreign_values}) {
+# TEMP
+    $rel_rsrc ||= $self->related_source($args->{rel_name});
+
     if (defined blessed $args->{foreign_values}) {
 
       $self->throw_exception( "Objects supplied as 'foreign_values' ($args->{foreign_values}) must inherit from DBIx::Class::Row" )
@@ -1953,6 +1961,9 @@ sub _resolve_relationship_condition {
       $self->throw_exception (
         "The join-free condition returned for $exception_rel_id must be a hash reference"
       ) unless ref $jfc eq 'HASH';
+
+# TEMP
+      $rel_rsrc ||= $self->related_source($args->{rel_name});
 
       my ($joinfree_alias, $joinfree_source);
       if (defined $args->{self_result_object}) {
@@ -2140,6 +2151,9 @@ sub _resolve_relationship_condition {
     for my $lhs (keys %$col_eqs) {
 
       next if $col_eqs->{$lhs} eq UNRESOLVABLE_CONDITION;
+
+# TEMP
+      $rel_rsrc ||= $self->related_source($args->{rel_name});
 
       # there is no way to know who is right and who is left in a cref
       # therefore a full blown resolution call, and figure out the
