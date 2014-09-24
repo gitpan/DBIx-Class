@@ -1,3 +1,4 @@
+AUTHORS
 Changes
 examples/Benchmarks/benchmark_datafetch.pl
 examples/Benchmarks/benchmark_hashrefinflator.pl
@@ -23,6 +24,7 @@ inc/Module/Install/Scripts.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/DBIx/Class.pm
+lib/DBIx/Class.pod
 lib/DBIx/Class/_TempExtlib/DBIx/Class/Storage/Debug/PrettyPrint.pm
 lib/DBIx/Class/_TempExtlib/DBIx/Class/Storage/Debug/PrettyPrint.pod
 lib/DBIx/Class/_TempExtlib/SQL/Abstract.pm
@@ -208,18 +210,19 @@ lib/DBIx/Class/UTF8Columns.pm
 lib/SQL/Translator/Parser/DBIx/Class.pm
 lib/SQL/Translator/Producer/DBIx/Class/File.pm
 maint/careless_ssh.bash
+maint/gen_pod_authors
 maint/gen_pod_index
 maint/gen_pod_inherit
 maint/gen_sqlite_schema_files
 maint/Makefile.PL.inc/01_adjust_INC.pl
 maint/Makefile.PL.inc/11_authortests.pl
 maint/Makefile.PL.inc/12_authordeps.pl
-maint/Makefile.PL.inc/21_meta_noindex.pl
+maint/Makefile.PL.inc/21_set_meta.pl
 maint/Makefile.PL.inc/29_handle_version.pl
 maint/Makefile.PL.inc/50_redefine_makefile_flow.pl
 maint/Makefile.PL.inc/51_autohandle_MANIFEST.pl
-maint/Makefile.PL.inc/52_autogen_README.pl
 maint/Makefile.PL.inc/53_autogen_pod.pl
+maint/Makefile.PL.inc/54_autogen_legalese_and_README.pl
 maint/Makefile.PL.inc/56_autogen_schema_files.pl
 maint/Makefile.PL.inc/61_inject_dbicadmin_pod.pl
 maint/Makefile.PL.inc/91_inc_sanity_check.pl
@@ -692,7 +695,9 @@ t/update/ident_cond.t
 t/update/type_aware.t
 t/zzzzzzz_perl_perf_bug.t
 t/zzzzzzz_sqlite_deadlock.t
+xt/authors.t
 xt/dbictest_unlink_guard.t
+xt/footers.t
 xt/old_envvars.t
 xt/optional_deps.t
 xt/pod.t

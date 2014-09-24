@@ -358,6 +358,16 @@ END {
     else {
       $tb->note("Auto checked $refs_traced references for leaks - none detected");
     }
+
+    # also while we are here and not in plain runmode: make sure we never
+    # loaded any of the strictures XS bullshit (it's a leak in a sense)
+    unless (DBICTest::RunMode->is_plain) {
+      for (qw(indirect multidimensional bareword::filehandles)) {
+        exists $INC{ Module::Runtime::module_notional_filename($_) }
+          and
+        $tb->ok(0, "$_ load apparently attempted!!!" )
+      }
+    }
   }
 }
 

@@ -3,18 +3,30 @@ package DBIx::Class::Storage::Statistics;
 use strict;
 use warnings;
 
+use DBIx::Class::_Util qw(sigwarn_silencer qsub);
+use IO::Handle ();
+
 # DO NOT edit away without talking to riba first, he will just put it back
 # BEGIN pre-Moo2 import block
 BEGIN {
   my $initial_fatal_bits = (${^WARNING_BITS}||'') & $warnings::DeadBits{all};
+
   local $ENV{PERL_STRICTURES_EXTRA} = 0;
-  require Moo; Moo->import;
+  # load all of these now, so that lazy-loading does not escape
+  # the current PERL_STRICTURES_EXTRA setting
+  require Sub::Quote;
+  require Sub::Defer;
+  require Moo;
+  require Moo::Object;
+  require Method::Generate::Accessor;
+  require Method::Generate::Constructor;
+
+  Moo->import;
   ${^WARNING_BITS} &= ( $initial_fatal_bits | ~ $warnings::DeadBits{all} );
 }
 # END pre-Moo2 import block
 
 extends 'DBIx::Class';
-use DBIx::Class::_Util qw(sigwarn_silencer qsub);
 use namespace::clean;
 
 =head1 NAME
@@ -221,18 +233,22 @@ sub query_start {
 Called when a query finishes executing.  Has the same arguments as query_start.
 
 =cut
+
 sub query_end {
   my ($self, $string) = @_;
 }
 
-1;
+=head1 FURTHER QUESTIONS?
 
-=head1 AUTHOR AND CONTRIBUTORS
+Check the list of L<additional DBIC resources|DBIx::Class/GETTING HELP/SUPPORT>.
 
-See L<AUTHOR|DBIx::Class/AUTHOR> and L<CONTRIBUTORS|DBIx::Class/CONTRIBUTORS> in DBIx::Class
+=head1 COPYRIGHT AND LICENSE
 
-=head1 LICENSE
-
-You may distribute this code under the same terms as Perl itself.
+This module is free software L<copyright|DBIx::Class/COPYRIGHT AND LICENSE>
+by the L<DBIx::Class (DBIC) authors|DBIx::Class/AUTHORS>. You can
+redistribute it and/or modify it under the same terms as the
+L<DBIx::Class library|DBIx::Class/COPYRIGHT AND LICENSE>.
 
 =cut
+
+1;

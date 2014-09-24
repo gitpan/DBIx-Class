@@ -1402,7 +1402,19 @@ sub disconnect_call_do_sql {
   $self->_do_query(@_);
 }
 
-# override in db-specific backend when necessary
+=head2 connect_call_datetime_setup
+
+A no-op stub method, provided so that one can always safely supply the
+L<connection option|/DBIx::Class specific connection attributes>
+
+ on_connect_call => 'datetime_setup'
+
+This way one does not need to know in advance whether the underlying
+storage requires any sort of hand-holding when dealing with calendar
+data.
+
+=cut
+
 sub connect_call_datetime_setup { 1 }
 
 sub _do_query {
@@ -2982,7 +2994,8 @@ sub create_ddl_dir {
 
 =back
 
-Returns the statements used by L</deploy> and L<DBIx::Class::Schema/deploy>.
+Returns the statements used by L<DBIx::Class::Storage/deploy>
+and L<DBIx::Class::Schema/deploy>.
 
 The L<SQL::Translator> (not L<DBI>) database driver name can be explicitly
 provided in C<$type>, otherwise the result of L</sqlt_type> is used as default.
@@ -3259,13 +3272,13 @@ transactions.  You're on your own for handling all sorts of exceptional
 cases if you choose the C<< AutoCommit => 0 >> path, just as you would
 be with raw DBI.
 
+=head1 FURTHER QUESTIONS?
 
-=head1 AUTHOR AND CONTRIBUTORS
+Check the list of L<additional DBIC resources|DBIx::Class/GETTING HELP/SUPPORT>.
 
-See L<AUTHOR|DBIx::Class/AUTHOR> and L<CONTRIBUTORS|DBIx::Class/CONTRIBUTORS> in DBIx::Class
+=head1 COPYRIGHT AND LICENSE
 
-=head1 LICENSE
-
-You may distribute this code under the same terms as Perl itself.
-
-=cut
+This module is free software L<copyright|DBIx::Class/COPYRIGHT AND LICENSE>
+by the L<DBIx::Class (DBIC) authors|DBIx::Class/AUTHORS>. You can
+redistribute it and/or modify it under the same terms as the
+L<DBIx::Class library|DBIx::Class/COPYRIGHT AND LICENSE>.

@@ -77,7 +77,7 @@ More specifically, the L<DBIx::Class::Core> base class pulls in the
 L<DBIx::Class::ResultSourceProxy::Table> component, which defines
 the L<table|DBIx::Class::ResultSourceProxy::Table/table> method.
 When called, C<table> creates and stores an instance of
-L<DBIx::Class::ResultSoure::Table>. Luckily, to use tables as result
+L<DBIx::Class::ResultSource::Table>. Luckily, to use tables as result
 sources, you don't need to remember any of this.
 
 Result sources representing select queries, or views, can also be
@@ -86,7 +86,8 @@ created, see L<DBIx::Class::ResultSource::View> for full details.
 =head2 Finding result source objects
 
 As mentioned above, a result source instance is created and stored for
-you when you define a L<result class|DBIx::Class::Manual::Glossary/Result class>.
+you when you define a
+L<Result Class|DBIx::Class::Manual::Glossary/Result Class>.
 
 You can retrieve the result source at runtime in the following ways:
 
@@ -108,7 +109,13 @@ You can retrieve the result source at runtime in the following ways:
 
 =head1 METHODS
 
-=pod
+=head2 new
+
+  $class->new();
+
+  $class->new({attribute_name => value});
+
+Creates a new ResultSource object.  Not normally called directly by end users.
 
 =cut
 
@@ -582,7 +589,7 @@ sub remove_column { shift->remove_columns(@_); } # DO NOT CHANGE THIS TO GLOB
 Defines one or more columns as primary key for this source. Must be
 called after L</add_columns>.
 
-Additionally, defines a L<unique constraint|add_unique_constraint>
+Additionally, defines a L<unique constraint|/add_unique_constraint>
 named C<primary>.
 
 Note: you normally do want to define a primary key on your sources
@@ -1179,6 +1186,17 @@ clause contents.
 =cut
 
 sub from { die 'Virtual method!' }
+
+=head2 source_info
+
+Stores a hashref of per-source metadata.  No specific key names
+have yet been standardized, the examples below are purely hypothetical
+and don't actually accomplish anything on their own:
+
+  __PACKAGE__->source_info({
+    "_tablespace" => 'fast_disk_array_3',
+    "_engine" => 'InnoDB',
+  });
 
 =head2 schema
 
@@ -2355,25 +2373,6 @@ sub throw_exception {
   ;
 }
 
-=head2 source_info
-
-Stores a hashref of per-source metadata.  No specific key names
-have yet been standardized, the examples below are purely hypothetical
-and don't actually accomplish anything on their own:
-
-  __PACKAGE__->source_info({
-    "_tablespace" => 'fast_disk_array_3',
-    "_engine" => 'InnoDB',
-  });
-
-=head2 new
-
-  $class->new();
-
-  $class->new({attribute_name => value});
-
-Creates a new ResultSource object.  Not normally called directly by end users.
-
 =head2 column_info_from_storage
 
 =over
@@ -2390,14 +2389,16 @@ Enables the on-demand automatic loading of the above column
 metadata from storage as necessary.  This is *deprecated*, and
 should not be used.  It will be removed before 1.0.
 
+=head1 FURTHER QUESTIONS?
 
-=head1 AUTHOR AND CONTRIBUTORS
+Check the list of L<additional DBIC resources|DBIx::Class/GETTING HELP/SUPPORT>.
 
-See L<AUTHOR|DBIx::Class/AUTHOR> and L<CONTRIBUTORS|DBIx::Class/CONTRIBUTORS> in DBIx::Class
+=head1 COPYRIGHT AND LICENSE
 
-=head1 LICENSE
-
-You may distribute this code under the same terms as Perl itself.
+This module is free software L<copyright|DBIx::Class/COPYRIGHT AND LICENSE>
+by the L<DBIx::Class (DBIC) authors|DBIx::Class/AUTHORS>. You can
+redistribute it and/or modify it under the same terms as the
+L<DBIx::Class library|DBIx::Class/COPYRIGHT AND LICENSE>.
 
 =cut
 

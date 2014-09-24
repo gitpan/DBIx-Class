@@ -64,10 +64,6 @@ Does not support full outer joins (however neither really does DBIC itself)
 
 =back
 
-=head1 AUTHOR
-
-Justin Wheeler C<< <jwheeler@datademons.com> >>
-
 =head1 INHERITED METHODS
 
 =over 4
@@ -78,11 +74,14 @@ L<is_literal_value|SQL::Abstract/is_literal_value>, L<is_plain_value|SQL::Abstra
 
 =back
 
-=head1 CONTRIBUTORS
+=head1 FURTHER QUESTIONS?
 
-David Jack Olrik C<< <djo@cpan.org> >>
+Check the list of L<additional DBIC resources|DBIx::Class/GETTING HELP/SUPPORT>.
 
-=head1 LICENSE
+=head1 COPYRIGHT AND LICENSE
 
-This module is licensed under the same terms as Perl itself.
+This module is free software L<copyright|DBIx::Class/COPYRIGHT AND LICENSE>
+by the L<DBIx::Class (DBIC) authors|DBIx::Class/AUTHORS>. You can
+redistribute it and/or modify it under the same terms as the
+L<DBIx::Class library|DBIx::Class/COPYRIGHT AND LICENSE>.
 

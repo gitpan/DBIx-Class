@@ -58,7 +58,7 @@ just stores all the conditions needed to create the query.
 
 A basic ResultSet representing the data of an entire table is returned
 by calling C<resultset> on a L<DBIx::Class::Schema> and passing in a
-L<Source|DBIx::Class::Manual::Glossary/Source> name.
+L<Source|DBIx::Class::Manual::Glossary/ResultSource> name.
 
   my $users_rs = $schema->resultset('User');
 
@@ -1147,7 +1147,7 @@ You most likely want to use L</search> with specific operators.
 
 For more information, see L<DBIx::Class::Manual::Cookbook>.
 
-This method is deprecated and will be removed in 0.09. Use L</search()>
+This method is deprecated and will be removed in 0.09. Use L<search()|/search>
 instead. An example conversion is:
 
   ->search_like({ foo => 'bar' });
@@ -1542,8 +1542,8 @@ L<"table"|DBIx::Class::Manual::Glossary/"ResultSource"> class.
 
 Note that changing the result_class will also remove any components
 that were originally loaded in the source class via
-L<DBIx::Class::ResultSource/load_components>. Any overloaded methods
-in the original source class will not run.
+L<load_components|Class::C3::Componentised/load_components( @comps )>.
+Any overloaded methods in the original source class will not run.
 
 =cut
 
@@ -4794,11 +4794,15 @@ supported:
   [ undef,   $val ] === [ {}, $val ]
   $val              === [ {}, $val ]
 
-=head1 AUTHOR AND CONTRIBUTORS
+=head1 FURTHER QUESTIONS?
 
-See L<AUTHOR|DBIx::Class/AUTHOR> and L<CONTRIBUTORS|DBIx::Class/CONTRIBUTORS> in DBIx::Class
+Check the list of L<additional DBIC resources|DBIx::Class/GETTING HELP/SUPPORT>.
 
-=head1 LICENSE
+=head1 COPYRIGHT AND LICENSE
 
-You may distribute this code under the same terms as Perl itself.
+This module is free software L<copyright|DBIx::Class/COPYRIGHT AND LICENSE>
+by the L<DBIx::Class (DBIC) authors|DBIx::Class/AUTHORS>. You can
+redistribute it and/or modify it under the same terms as the
+L<DBIx::Class library|DBIx::Class/COPYRIGHT AND LICENSE>.
 
+=cut
