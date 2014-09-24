@@ -214,6 +214,7 @@ maint/gen_pod_authors
 maint/gen_pod_index
 maint/gen_pod_inherit
 maint/gen_sqlite_schema_files
+maint/getstatus
 maint/Makefile.PL.inc/01_adjust_INC.pl
 maint/Makefile.PL.inc/11_authortests.pl
 maint/Makefile.PL.inc/12_authordeps.pl

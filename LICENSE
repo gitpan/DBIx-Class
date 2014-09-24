@@ -2,7 +2,8 @@ DBIx::Class is Copyright (c) 2005-2014 by mst, castaway, ribasushi, and others.
 See AUTHORS and LICENSE included with this distribution. All rights reserved.
 
 This is free software; you can redistribute it and/or modify it under the
-same terms as the Perl5 (v5.0.0 ~ v5.20.0) programming language system itself:
+same terms as the Perl5 (v5.0.0 ~ v5.20.0) programming language system
+itself: under the terms of either:
 
 a) the "Artistic License 1.0" as published by The Perl Foundation
    http://www.perlfoundation.org/artistic_license_1_0
@@ -13,8 +14,8 @@ b) the GNU General Public License as published by the Free Software Foundation;
 
 PLEASE NOTE: It is the current maintainers intention to keep the dual
 licensing intact. Until this notice is removed, releases will continue to
-be available under both the standard GPL and the more freedom-friendly
-Artistic licenses.
+be available under both the standard GPL and the less restrictive Artistic
+licenses.
 
 Verbatim copies of both licenses are included below:
 

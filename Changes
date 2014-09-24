@@ -1,6 +1,6 @@
 Revision history for DBIx::Class
 
-0.082700_14 MetaCpan-check TRIAL RELEASE (roughly 325867a45) 2014-09-24 03:25 (UTC)
+0.082700_15 CpanTesters-check TRIAL RELEASE (roughly b77a61d86) 2014-09-24 15:25 (UTC)
     * Notable Changes and Deprecations
         - DBIC::FilterColumn now properly bypasses \'' and \[] literals, just
           like the rest of DBIC

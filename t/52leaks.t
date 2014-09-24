@@ -21,6 +21,9 @@ use strict;
 use warnings;
 use Test::More;
 
+plan skip_all => 'Temporarily skip trial-Test-More dying test for _15 *only*'
+  if eval { Test::More->VERSION('1.300') };
+
 my $TB = Test::More->builder;
 if ($ENV{DBICTEST_IN_PERSISTENT_ENV}) {
   # without this explicit close older TBs warn in END after a ->reset

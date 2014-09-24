@@ -17,7 +17,7 @@ configure_requires:
 distribution_type: module
 dynamic_config: 0
 generated_by: 'Module::Install version 1.06'
-license: perl5
+license: perl_5
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
@@ -46,7 +46,6 @@ requires:
   Config::Any: 0.20
   Context::Preserve: 0.01
   DBI: 1.57
-  Data::Compare: 1.22
   Data::Dumper::Concise: 2.020
   Data::Page: 2.00
   Devel::GlobalDestruction: 0.09
@@ -70,7 +69,7 @@ resources:
   homepage: http://www.dbix-class.org/
   license: http://dev.perl.org/licenses/
   repository: https://github.com/dbsrgits/DBIx-Class
-version: 0.082700_14
+version: 0.082700_15
 x_authority: cpan:RIBASUSHI
 x_contributors:
   - 'abraxxa: Alexander Hartmaier <abraxxa@cpan.org>'

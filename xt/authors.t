@@ -49,7 +49,9 @@ for (@known_authors) {
   }
 }
 
-diag "\n\n$count contributors made this library what it is today\n\n";
+# do not announce anything under travis - we are watching for STDERR silence
+diag "\n\n$count contributors made this library what it is today\n\n"
+  unless ($ENV{TRAVIS}||'') eq 'true';
 
 # augh taint mode
 if (length $ENV{PATH}) {

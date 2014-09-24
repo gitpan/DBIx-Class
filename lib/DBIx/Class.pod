@@ -1,5 +1,3 @@
-=encoding UTF-8
-
 =head1 NAME
 
 DBIx::Class - Extensible and flexible object <-> relational mapper.
@@ -225,7 +223,7 @@ contribution, but deserve acknowledgement just the same. Time and time again
 the seemingly most insignificant questions and suggestions have been shown
 to catalyze monumental improvements in consistency, accuracy and performance.
 
-List of the awesome contributors who made DBIC v0.082700_14 possible
+List of the awesome contributors who made DBIC v0.082700_15 possible
 
 =encoding utf8
 
