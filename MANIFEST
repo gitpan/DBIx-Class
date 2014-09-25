@@ -25,12 +25,6 @@ inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/DBIx/Class.pm
 lib/DBIx/Class.pod
-lib/DBIx/Class/_TempExtlib/DBIx/Class/Storage/Debug/PrettyPrint.pm
-lib/DBIx/Class/_TempExtlib/DBIx/Class/Storage/Debug/PrettyPrint.pod
-lib/DBIx/Class/_TempExtlib/SQL/Abstract.pm
-lib/DBIx/Class/_TempExtlib/SQL/Abstract/Test.pm
-lib/DBIx/Class/_TempExtlib/SQL/Abstract/Test.pod
-lib/DBIx/Class/_TempExtlib/SQL/Abstract/Tree.pm
 lib/DBIx/Class/_Util.pm
 lib/DBIx/Class/AccessorGroup.pm
 lib/DBIx/Class/Admin.pm
@@ -209,7 +203,7 @@ lib/DBIx/Class/Storage/TxnScopeGuard.pm
 lib/DBIx/Class/UTF8Columns.pm
 lib/SQL/Translator/Parser/DBIx/Class.pm
 lib/SQL/Translator/Producer/DBIx/Class/File.pm
-maint/careless_ssh.bash
+LICENSE
 maint/gen_pod_authors
 maint/gen_pod_index
 maint/gen_pod_inherit

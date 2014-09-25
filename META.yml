@@ -17,7 +17,7 @@ configure_requires:
 distribution_type: module
 dynamic_config: 0
 generated_by: 'Module::Install version 1.06'
-license: perl_5
+license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
@@ -29,7 +29,6 @@ no_index:
     - lib/DBIx/Class/Admin
     - lib/DBIx/Class/CDBICompat
     - lib/DBIx/Class/PK/Auto
-    - lib/DBIx/Class/_TempExtlib
     - maint
     - t
     - xt
@@ -55,7 +54,7 @@ requires:
   Module::Find: 0.07
   Moo: 1.004005
   Path::Class: 0.18
-  SQL::Abstract: 1.78
+  SQL::Abstract: 1.79
   Scope::Guard: 0.03
   Sub::Name: 0.04
   Text::Balanced: 2.00
@@ -69,7 +68,7 @@ resources:
   homepage: http://www.dbix-class.org/
   license: http://dev.perl.org/licenses/
   repository: https://github.com/dbsrgits/DBIx-Class
-version: 0.082700_15
+version: 0.082800
 x_authority: cpan:RIBASUSHI
 x_contributors:
   - 'abraxxa: Alexander Hartmaier <abraxxa@cpan.org>'
@@ -245,7 +244,7 @@ x_contributors:
   - 'talexb: Alex Beamish <talexb@gmail.com>'
   - 'tamias: Ronald J Kimball <rjk@tamias.net>'
   - 'TBSliver: Tom Bloor <t.bloor@shadowcat.co.uk>'
-  - 'teejay : Aaron Trevena <teejay@cpan.org>'
+  - 'teejay: Aaron Trevena <teejay@cpan.org>'
   - 'theorbtwo: James Mastros <james@mastros.biz>'
   - 'Thomas Kratz <tomk@cpan.org>'
   - 'timbunce: Tim Bunce <tim.bunce@pobox.com>'

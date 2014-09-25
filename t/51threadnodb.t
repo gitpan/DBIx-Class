@@ -16,9 +16,6 @@ use strict;
 use warnings;
 use Test::More;
 
-plan skip_all => 'Temporarily skip trial-Test-More dying test for _15 *only*'
-  if eval { Test::More->VERSION('1.300') };
-
 use lib qw(t/lib);
 use DBICTest;
 

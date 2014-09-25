@@ -21,8 +21,18 @@ use strict;
 use warnings;
 use Test::More;
 
-plan skip_all => 'Temporarily skip trial-Test-More dying test for _15 *only*'
-  if eval { Test::More->VERSION('1.300') };
+use lib qw(t/lib);
+use DBICTest::RunMode;
+
+plan skip_all => "Temporarily no smoke testing of Test::More 1.3xx alphas" if (
+  DBICTest::RunMode->is_smoker
+    and
+  eval { Test::More->VERSION("1.300") }
+    and
+  require ExtUtils::MakeMaker
+    and
+  MM->parse_version($INC{"Test/Builder.pm"}) =~ / ^ 1 \. 3.. ... \_ /x
+);
 
 my $TB = Test::More->builder;
 if ($ENV{DBICTEST_IN_PERSISTENT_ENV}) {
@@ -48,8 +58,6 @@ if ($ENV{DBICTEST_IN_PERSISTENT_ENV}) {
   $TB->reset;
 }
 
-use lib qw(t/lib);
-use DBICTest::RunMode;
 use DBICTest::Util::LeakTracer qw(populate_weakregistry assert_empty_weakregistry visit_refs);
 use Scalar::Util qw(weaken blessed reftype);
 use DBIx::Class;

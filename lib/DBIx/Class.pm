@@ -11,7 +11,7 @@ our $VERSION;
 # $VERSION declaration must stay up here, ahead of any other package
 # declarations, as to not confuse various modules attempting to determine
 # this ones version, whether that be s.c.o. or Module::Metadata, etc
-$VERSION = '0.082700_15';
+$VERSION = '0.082800';
 
 $VERSION = eval $VERSION if $VERSION =~ /_/; # numify for warning-free dev releases
 
@@ -255,8 +255,10 @@ Contributions are always welcome, in all usable forms (we especially
 welcome documentation improvements). The delivery methods include git-
 or unified-diff formatted patches, GitHub pull requests, or plain bug
 reports either via RT or the Mailing list. Contributors are generally
-granted full access to the official repository after their first patch
-passes successful review.
+granted access to the official repository after their first several
+patches pass successful review. Don't hesitate to
+L<contact|/GETTING HELP/SUPPORT> either of the L</CAT HERDERS> with
+any further questions you may have.
 
 =for comment
 FIXME: Getty, frew and jnap need to get off their asses and finish the contrib section so we can link it here ;)
@@ -297,6 +299,23 @@ The canonical source of authors and their details is the F<AUTHORS> file at
 the root of this distribution (or repository). The canonical source of
 per-line authorship is the L<git repository|/HOW TO CONTRIBUTE> history
 itself.
+
+=head1 CAT HERDERS
+
+The fine folks nudging the project in a particular direction:
+
+=over
+
+B<ribasushi>: Peter Rabbitson <ribasushi@cpan.org>
+(present day maintenance and controlled evolution)
+
+B<castaway>: Jess Robinson <castaway@desert-island.me.uk>
+(lions share of the reference documentation and manuals)
+
+B<mst>: Matt S Trout <mst@shadowcat.co.uk> (project founder -
+original idea, architecture and implementation)
+
+=back
 
 =head1 COPYRIGHT AND LICENSE
 
