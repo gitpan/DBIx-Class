@@ -39,7 +39,7 @@ no_index:
     - DBIx::Class::_Util
     - DBIx::Class::ResultSet::Pager
 requires:
-  Class::Accessor::Grouped: 0.10010
+  Class::Accessor::Grouped: 0.10012
   Class::C3::Componentised: 1.0009
   Class::Inspector: 1.24
   Config::Any: 0.20
@@ -54,7 +54,7 @@ requires:
   Module::Find: 0.07
   Moo: 1.004005
   Path::Class: 0.18
-  SQL::Abstract: 1.79
+  SQL::Abstract: 1.80
   Scope::Guard: 0.03
   Sub::Name: 0.04
   Text::Balanced: 2.00
@@ -68,7 +68,7 @@ resources:
   homepage: http://www.dbix-class.org/
   license: http://dev.perl.org/licenses/
   repository: https://github.com/dbsrgits/DBIx-Class
-version: 0.082800
+version: 0.082801
 x_authority: cpan:RIBASUSHI
 x_contributors:
   - 'abraxxa: Alexander Hartmaier <abraxxa@cpan.org>'
