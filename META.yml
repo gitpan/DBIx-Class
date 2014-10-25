@@ -54,7 +54,7 @@ requires:
   Module::Find: 0.07
   Moo: 1.006001
   Path::Class: 0.18
-  SQL::Abstract: 1.80
+  SQL::Abstract: 1.81
   Scope::Guard: 0.03
   Sub::Name: 0.04
   Text::Balanced: 2.00
@@ -68,7 +68,7 @@ resources:
   homepage: http://www.dbix-class.org/
   license: http://dev.perl.org/licenses/
   repository: https://github.com/dbsrgits/DBIx-Class
-version: 0.082801_01
+version: 0.082810
 x_authority: cpan:RIBASUSHI
 x_contributors:
   - 'abraxxa: Alexander Hartmaier <abraxxa@cpan.org>'
