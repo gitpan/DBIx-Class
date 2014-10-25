@@ -612,6 +612,7 @@ t/resultset/rowparser_internals.t
 t/resultset/update_delete.t
 t/resultset_class.t
 t/resultset_overload.t
+t/resultsource/bare_resultclass_exception.t
 t/resultsource/set_primary_key.t
 t/row/copy_with_extra_selection.t
 t/row/filter_column.t
